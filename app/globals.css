@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f6f7fb;
+  color: #0f172a;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+.pdf-page {
+  print-color-adjust: exact;
+  -webkit-print-color-adjust: exact;
+}
+
+.pdf-sheet {
+  width: var(--pdf-page-width);
+  height: var(--pdf-page-height);
+  min-height: var(--pdf-page-height);
+  aspect-ratio: var(--pdf-page-ratio);
+  break-after: page;
+  page-break-after: always;
+}
+
+.pdf-sheet:last-child {
+  break-after: auto;
+  page-break-after: auto;
+}
