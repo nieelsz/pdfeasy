@@ -1,26 +1,26 @@
 # PDFEasy
 
-PDFEasy is a Next.js app for generating structured, editable PDF content with AI and exporting it through fixed React/Tailwind templates.
+PDFEasy é uma aplicação Next.js para gerar conteúdo estruturado com IA, revisar o material gerado e exportar PDFs a partir de templates fixos em React/Tailwind.
 
-It was built for creators, agencies, consultants, and small businesses that need quick guides, checklists, mini ebooks, proposals, bonuses, and internal materials without starting from a blank document.
+O projeto foi pensado para criadores, agências, consultores e pequenos negócios que precisam criar guias rápidos, checklists, mini ebooks, propostas, bônus digitais e materiais internos sem começar do zero.
 
-## Features
+## Funcionalidades
 
-- Generate structured PDF content with Groq.
-- Fallback mock content when `GROQ_API_KEY` is not configured.
-- Export PDFs with Playwright.
-- Edit generated titles, subtitles, page content, items, and CTAs before exporting.
-- Save draft state in the browser with `localStorage`.
-- Responsive interface for desktop and mobile.
-- PDF preview that scales on small screens.
-- External AI briefing helper:
-  - copy a prompt with a JSON model;
-  - paste the JSON returned by another AI;
-  - automatically fill the PDFEasy briefing fields.
-- Export validation to catch page overflow before downloading.
-- Footer branding: `by Eight Digital.`
+- Geração de conteúdo estruturado com Groq.
+- Conteúdo mockado quando `GROQ_API_KEY` não está configurada.
+- Exportação de PDF com Playwright.
+- Edição de títulos, subtítulos, conteúdo das páginas, itens e CTAs antes de exportar.
+- Salvamento automático do rascunho no navegador com `localStorage`.
+- Interface responsiva para desktop e celular.
+- Preview do PDF com escala automática em telas pequenas.
+- Assistente para briefing com IA externa:
+  - copia um prompt com modelo JSON;
+  - permite colar o JSON retornado por outra IA;
+  - preenche automaticamente os campos do PDFEasy.
+- Validação de overflow antes de baixar o PDF.
+- Rodapé com a marca `by Eight Digital.`
 
-## Stack
+## Tecnologias
 
 - Next.js 14
 - React 18
@@ -31,96 +31,97 @@ It was built for creators, agencies, consultants, and small businesses that need
 - Playwright
 - Lucide React
 
-## Getting Started
+## Como Rodar Localmente
 
-Install dependencies:
+Instale as dependências:
 
 ```bash
 npm install
 ```
 
-Create a local environment file:
+Crie o arquivo de ambiente local:
 
 ```bash
 cp .env.example .env.local
 ```
 
-If you do not have `.env.example`, create `.env.local` manually:
+Se preferir, crie `.env.local` manualmente:
 
 ```bash
-GROQ_API_KEY=your_groq_api_key_here
+GROQ_API_KEY=sua_chave_da_groq_aqui
 GROQ_MODEL=llama-3.3-70b-versatile
 ```
 
-Run the development server:
+Inicie o servidor de desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Open:
+Acesse:
 
 ```text
 http://localhost:3000
 ```
 
-## Environment Variables
+## Variáveis de Ambiente
 
-| Variable | Required | Description |
+| Variável | Obrigatória | Descrição |
 | --- | --- | --- |
-| `GROQ_API_KEY` | No | Groq API key used to generate real AI content. If missing, PDFEasy uses mock content. |
-| `GROQ_MODEL` | No | Groq model name. Defaults to `llama-3.3-70b-versatile`. |
+| `GROQ_API_KEY` | Não | Chave da Groq usada para gerar conteúdo real com IA. Se não estiver configurada, o PDFEasy usa conteúdo mockado. |
+| `GROQ_MODEL` | Não | Modelo da Groq. O padrão é `llama-3.3-70b-versatile`. |
 
-Never commit `.env.local` or real API keys to GitHub.
+Nunca envie `.env.local` ou chaves reais para o GitHub.
 
 ## Scripts
+
+Inicia o ambiente de desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-Starts the local Next.js development server.
+Gera o build de produção:
 
 ```bash
 npm run build
 ```
 
-Creates a production build.
+Executa o build de produção localmente:
 
 ```bash
 npm run start
 ```
 
-Runs the production build locally.
+Roda o lint do Next.js:
 
 ```bash
 npm run lint
 ```
 
-Runs Next.js linting.
+Valida os tipos TypeScript sem gerar arquivos:
 
 ```bash
 npm run typecheck
 ```
 
-Runs TypeScript validation without emitting files.
+## Como Usar
 
-## How To Use
+1. Escolha o tipo de PDF, formato, orientação, cor, tom de voz, profundidade e tipo de entrega.
+2. Preencha objetivo, público-alvo, pontos obrigatórios e briefing.
+3. Opcionalmente, use a seção **Melhorar briefing com IA externa**:
+   - clique em **Copiar prompt**;
+   - cole o prompt na sua IA preferida;
+   - copie o JSON retornado;
+   - cole no PDFEasy;
+   - clique em **Aplicar JSON no briefing**.
+4. Clique em **Gerar preview**.
+5. Revise e edite o conteúdo gerado.
+6. Clique em **Exportar PDF**.
 
-1. Choose the PDF type, format, orientation, color, tone, depth, and delivery type.
-2. Fill in the objective, audience, required points, and briefing.
-3. Optional: use **Melhorar briefing com IA externa**:
-   - click **Copiar prompt**;
-   - paste it into your preferred AI;
-   - paste the returned JSON into PDFEasy;
-   - click **Aplicar JSON no briefing**.
-4. Click **Gerar preview**.
-5. Review and edit the generated content.
-6. Click **Exportar PDF**.
+## Modelo JSON Para IA Externa
 
-## External AI JSON Model
-
-PDFEasy can ingest JSON in this shape:
+O PDFEasy consegue preencher o briefing a partir de um JSON neste formato:
 
 ```json
 {
@@ -147,13 +148,13 @@ PDFEasy can ingest JSON in this shape:
 }
 ```
 
-## PDF Export Notes
+## Exportação de PDF
 
-The export route validates the PDF document with Zod and renders server-side HTML from structured JSON. It does not accept arbitrary HTML from the browser.
+A rota de exportação valida o documento com Zod e renderiza o HTML no servidor a partir de JSON estruturado. Ela não confia em HTML arbitrário vindo do navegador.
 
-Before returning the file, PDFEasy checks whether any `.pdf-sheet` overflowed. If a page has too much content, the export fails with a message asking the user to edit or regenerate with less detail.
+Antes de devolver o arquivo, o PDFEasy verifica se alguma página `.pdf-sheet` estourou o limite visual. Se houver conteúdo demais em uma página, a exportação falha com uma mensagem pedindo para editar ou regenerar com menos detalhes.
 
-## Project Structure
+## Estrutura do Projeto
 
 ```text
 app/
@@ -177,21 +178,21 @@ lib/
   themes.ts
 ```
 
-## Deployment
+## Deploy
 
-This project can be deployed like a regular Next.js app. Make sure the deployment environment supports:
+O projeto pode ser publicado como uma aplicação Next.js comum. Garanta que o ambiente de deploy suporte:
 
-- Node.js runtime for API routes;
-- Playwright/Chromium execution for PDF export;
-- the `GROQ_API_KEY` environment variable if you want real AI generation.
+- runtime Node.js para as rotas de API;
+- execução do Playwright/Chromium para exportação de PDF;
+- variável `GROQ_API_KEY`, caso você queira geração real com IA.
 
-## Security
+## Segurança
 
-- Keep API keys out of Git.
-- Keep `.env.local` local only.
-- Rotate any API key that was accidentally shared or committed.
-- The current export flow renders from validated JSON instead of trusting browser-provided HTML.
+- Não suba chaves de API para o GitHub.
+- Mantenha `.env.local` apenas no ambiente local.
+- Rotacione qualquer chave que tenha sido compartilhada ou commitada por engano.
+- A exportação atual renderiza o PDF a partir de JSON validado, em vez de confiar em HTML enviado pelo navegador.
 
-## Credits
+## Créditos
 
 by Eight Digital.
